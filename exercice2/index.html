@@ -1,0 +1,94 @@
+<!-- CONSIGNES :
+
+Au clic sur une ligne du tableau on affiche le commentaire lié à ce poste
+
+N'importe ou sur la ligne = cibler le tr
+
+ -->
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <title></title>
+    </head>
+    <body>
+        <div id="table">
+        </div>
+        <div id="commentaires">
+        </div>
+        <script>
+            $(function(){
+                $(function(){
+                    var api = $.ajax({
+                        url: "http://jsonplaceholder.typicode.com/posts",
+                        method: "GET",
+                    });
+
+                    api.done(function( msg ) {
+
+                        var table = '<table>';
+                        table += '<tr>';
+
+                        $.each(msg[0], function(index, value){
+                            table += "<th>";
+                            table += index;
+                            table += "</th>";
+                        });
+
+
+                        table += "</tr>";
+                        for (var i = 0 ; i < msg.length; i++){
+                            table += '<tr>';
+
+                            $.each(msg[i], function(index,value){
+                                    table += '<td><a href="http://jsonplaceholder.typicode.com/comments?postId='+msg[i].userId+'">';
+                                    table += value;
+                                    table += '</a></td>';
+                            })
+                            table += '</tr>';
+                        }
+
+                        table += '</table>';
+                        $('#table').html(table);
+
+                        $('a').click(function(event){
+                            event.preventDefault();
+                            var id = $(this).attr("href");
+                            console.log(id);
+                                var request = $.ajax ({
+                                    url: id,
+                                    method: "GET",
+                                })
+
+                                request.done(function(msg2) {
+                                    newTable = "<table border='2'>";
+                                    for (var i = 0; i < msg2.length; i++) {
+                                        console.log(msg2)
+                                        newTable += "<tr>";
+
+                                        $.each(msg2[i], function(index, value) {
+                                            // for (var i = 0; i < msg2.length; i++) {
+                                                newTable += "<td>";
+                                                newTable += value;
+                                                newTable += "</td>";
+                                            // }
+                                        })
+
+                                        newTable += "</tr>";
+                                    }
+
+                                    $("#commentaires").html(newTable+"</table>");
+                                })
+                            })
+                        });
+
+                    api.fail(function(XPDDR, data ) {
+                        alert("Request fail !");
+                    });
+                });
+            })
+        </script>
+    </body>
+</html>

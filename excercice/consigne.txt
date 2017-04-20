@@ -1,8 +1,0 @@
-http://jsonplaceholder.typicode.com/users
-
-Tableau : afficher un tableau avec :
-name
-username
-email
-phone
-company name

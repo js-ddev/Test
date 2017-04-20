@@ -55,7 +55,8 @@
 
                     table += '</table>';
                     $('#table').html(table);
-                    // console.log( JSON.stringify(msg) );
+
+
 
                     // ESSAI D'AFFICHAGE DU TABLEAU :
                     // var table = '<table border "1"><tr>';
